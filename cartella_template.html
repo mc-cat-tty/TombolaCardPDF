@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+	<title>Cartella {{ title }}</title>
+</head>
+<body>
+    <ul id="navigation">
+    {% for row in rows %}
+    	{% for number in row %}
+        <li><a>{{ number }}</a></li>
+        {% endfor %}
+    {% endfor %}
+    </ul>
+
+</body>
+</html>
