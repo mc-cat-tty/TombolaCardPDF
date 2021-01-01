@@ -1,4 +1,5 @@
 # CartellaTombolaPDF
+Tombola card pdf generator from html format template
 
 ## Setting up
 ```
