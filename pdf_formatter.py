@@ -14,9 +14,9 @@ def main() -> None:
     template_env = Environment(loader=template_loader)
     template = template_env.get_template(HTML_TEMPLATE_FILENAME)
     with open(HTML_FILENAME, "w") as f:
-        text = template.render()
+        text = template.render(name="Cartella 1.1", rows=[[1.2], [2,2]])
         f.write(text)
-    pdfkitfron_file(HTML_FILENAME, PDF_FILENAME)
+    pdfkit.from_file(HTML_FILENAME, PDF_FILENAME)
 
 if __name__ == "__main__":
     main()
