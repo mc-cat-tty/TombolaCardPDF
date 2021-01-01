@@ -13,4 +13,4 @@ cat cartelle_set.txt > python3 pdf_formatter.py
 ```
 
 ## _cartelle_set.txt_ sample
-Input must be formatte in the following way: [cartelle_set sample] (cartelle_set.txt)
+Input must be formatte in the following way: [cartelle_set sample](cartelle_set.txt)
