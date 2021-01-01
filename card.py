@@ -1,5 +1,7 @@
 '''
-Module containing class Card and some method for its management
+Module containing needed data structures:
+- class Card and some method for its management
+- class CardsSet
 '''
 
 from typing import List
