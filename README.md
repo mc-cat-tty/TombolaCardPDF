@@ -14,6 +14,7 @@ cat cards_set.txt > python3 pdf_formatter.py
 
 ## _cards_set.txt_ sample
 Input must be formatted in the following way: [cards_set.txt sample](cards_set.txt)
+
 Formatting rules:
 - there must be two lines for each card:
 	- the first one is the name of that card inside the set
