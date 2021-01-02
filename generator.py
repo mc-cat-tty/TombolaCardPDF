@@ -20,6 +20,7 @@ def print_sets(sets: List[CardsSet]) -> None:
         for card in cards_set:
             print(card.title)
             print(card.content)
+        print("")  # Blank line
 
 def generate_set(set_num: int) -> CardsSet:
     cards_set: CardsSet = CardsSet()
@@ -82,7 +83,7 @@ def generate_card(card_num: int, set_num: int, nums: List[List[int]]) -> Card:
             if len(col) != 0 and card_content[row_num][col_num] == -1:
                 card_content[row_num][col_num] = nums[col_num].pop()
                 break
-    card: Card = Card(card_content, f"Cartella {card_num}")
+    card: Card = Card(card_content, f"Cartella {set_num} {card_num}")
     return card
 
 def generate_number_placement_matrix(nums: List[List[int]]) -> List[List[bool]]:

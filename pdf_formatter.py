@@ -10,6 +10,7 @@ from jinja2 import Template, Environment, FileSystemLoader
 from card import Card, CardsSet
 from typing import List
 import argparse
+from PyPDF2 import PdfFileMerger, PdfFileReader
 
 HTML_TEMPLATE_FILENAME: str = "cards_set_template.html"
 HTML_FILENAME: str = "cards_set.html"
@@ -37,30 +38,42 @@ def import_data_from(source: List[str]) -> CardsSet:
             # cols_list: List[List] = ast.literal_eval(line_pair[1])
             # rows_list: List[List] = transpose_matrix(cols_list)
             rows_list: List[List] = ast.literal_eval(line_pair[1])
-            cards_set.append(Card(rows_list, title))
+            cards_set.append(Card(rows_list, title))  # Inside title there are set number and card number
     return cards_set
 
 
 def main(logo_filename: str, bottom_text: str) -> None:
-    buf: List[str] = list()
-    for line in sys.stdin:
-        buf.append(line.strip())
-    cards_set: CardsSet = import_data_from(buf)
-    
-    # Jinja 2 configuration
-    template_loader = FileSystemLoader(searchpath="./")  # Place files inside the same directory
-    template_env = Environment(loader=template_loader)
-    template = template_env.get_template(HTML_TEMPLATE_FILENAME)
-    with open(HTML_FILENAME, "w") as f:
-        text = template.render(cards_set=cards_set, logo_filename=logo_filename, bottom_text=bottom_text, enumerate=enumerate)
-        f.write(text)
-    
-    # pdfkit configuration
-    options = {
-            "page-size": "A4",
-            "enable-local-file-access": None
-    }
-    pdfkit.from_file(HTML_FILENAME, PDF_FILENAME, options=options)
+    merger = PdfFileMerger()
+    while True:
+        buf: List[str] = list()
+        for line in sys.stdin:
+            line: str = line.strip()
+            if not line:
+                break
+            buf.append(line)
+        if not buf:
+            break
+        cards_set: CardsSet = import_data_from(buf)
+        
+        # Jinja 2 configuration
+        template_loader = FileSystemLoader(searchpath="./")  # Place files inside the same directory
+        template_env = Environment(loader=template_loader)
+        template = template_env.get_template(HTML_TEMPLATE_FILENAME)
+        with open(HTML_FILENAME, "w") as f:
+            text = template.render(cards_set=cards_set, logo_filename=logo_filename, bottom_text=bottom_text, enumerate=enumerate)
+            f.write(text)
+        
+        # pdfkit configuration
+        options = {
+                "page-size": "A4",
+                "enable-local-file-access": None
+        }
+        pdfkit.from_file(HTML_FILENAME, PDF_FILENAME, options=options)
+        with open(PDF_FILENAME, 'rb') as f:
+            merger.append(PdfFileReader(f))
+        #with open(PDF_FILENAME, "wb") as f:
+        #    f.write(pdf_buf)
+    merger.write(PDF_FILENAME)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
