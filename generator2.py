@@ -96,6 +96,7 @@ def generate_last_cards(card_num: int, set_num: int, nums: List[List[int]]) -> C
         sorted_key_list: List[int] = sorted(d, key=lambda k: len(d[k]), reverse=True)
         sorted_d: Dict[int, List[int]] = {k: d[k] for k in sorted_key_list}
         # print(sorted_d)
+        # print(sorted_d)
         shuffled_sorted_d = defaultdict(list)
         for k, v in sorted_d.items():
             shuffled_sorted_d[len(v)].append((k, v))
@@ -116,7 +117,7 @@ def generate_last_cards(card_num: int, set_num: int, nums: List[List[int]]) -> C
 
 
 def generate_card(card_num: int, set_num: int, nums: List[List[int]]) -> Card:
-    if card_num >= 3:  # If it's the last card of the set
+    if card_num >= 4:  # If it's the last card of the set
         # print("generating last cards")
         return generate_last_cards(card_num, set_num, nums)
     number_placement_matrix: List[List[bool]] = generate_number_placement_matrix(nums)
@@ -164,5 +165,4 @@ if __name__ == "__main__":
    parser.add_argument("-n", "--number", help="Number of sets to generate", default=SET_NUMBER, type=int, dest="set_number")
    args = parser.parse_args()
    main(args.set_number)
-
 
