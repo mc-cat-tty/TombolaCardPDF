@@ -48,7 +48,7 @@ All the sets will be merged into a single pdf file
 ```
 python3 pdf_formatter.py -b "First line <br> second line <br> third line"
 ```
-Divide multiple lines with "<br>" HTML tag
+Divide multiple lines with "&lt;br&gt;" HTML tag
 
 ## _cards_set.txt_ sample
 Input must be formatted in the following way: [cards_set.txt sample](cards_set.txt)
