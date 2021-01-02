@@ -27,7 +27,7 @@ python3 generator.py | python3 pdf_formatter.py -b "place your bottom text here"
 ```
 
 ## _generator.py_ arguments
--n  Number of cards set. Default value is 1
+-n  Number of card sets. Default value is 1
 
 ### _pdf_formatter.py_ Arguments
 -b  Bottom text
