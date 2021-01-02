@@ -42,7 +42,7 @@ def import_data_from(source: List[str]) -> CardsSet:
     return cards_set
 
 
-def main(logo_filename: str, bottom_text: str) -> None:
+def main(logo_filename: str, bottom_text: str, template_filename: str) -> None:
     merger = PdfFileMerger()
     counter: int = 0
     while True:
@@ -59,7 +59,7 @@ def main(logo_filename: str, bottom_text: str) -> None:
         # Jinja 2 configuration
         template_loader = FileSystemLoader(searchpath="./")  # Place files inside the same directory
         template_env = Environment(loader=template_loader)
-        template = template_env.get_template(HTML_TEMPLATE_FILENAME)
+        template = template_env.get_template(template_filename)
         with open(HTML_FILENAME, "w") as f:
             text = template.render(cards_set=cards_set, logo_filename=logo_filename, bottom_text=bottom_text, enumerate=enumerate)
             f.write(text)
@@ -82,5 +82,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-l", "--logo", help="Logo filename", default=LOGO_FILENAME, type=str, dest="logo_filename")
     parser.add_argument("-b", "--bottomtext", help="Bottom text", default=BOTTOM_TEXT, type=str, dest="bottom_text")
+    parser.add_argument("-t", "--template", help="HTML template filename", default=HTML_TEMPLATE_FILENAME, type=str, dest="template_filename")
     args = parser.parse_args()
-    main(args.logo_filename, args.bottom_text)
+    main(args.logo_filename, args.bottom_text, args.template_filename)
