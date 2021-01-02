@@ -31,42 +31,84 @@ def generate_set(set_num: int) -> CardsSet:
             if not t and not u:  # Skip 0
                 continue
             nums[t].append(t*10 + u)
+        if t == 8:
+            nums[8].append(90)
         random.shuffle(nums[t])
     # print(nums)
     for i in range(6):
         card: Card = generate_card(i+1, set_num, nums)
         cards_set.append(card)
-    if any(nums):  # Numbers distribution within a set is not perfect, but this way the generation is much faster
-        last_card: Card = cards_set.pop()
-        for row_num, row in enumerate(last_card.content):
-            for col_num, ele in enumerate(row):
-                if ele != -1:
-                    nums[col_num].append(ele)
-        for _ in range(3):
-            for i in range(9):
-                nums[i].append(random.randint(10*i, 10*i+9))
-        for row_num in range(3):
-            counter: int = 9-last_card.content[row_num].count(-1)
-            # print(counter)
-            if row_num%2 == 0:
-                for col_num, col in enumerate(nums):
-                    if counter >= 5:
-                        break
-                    if len(col) != 0 and last_card.content[row_num][col_num] == -1:
-                        last_card.content[row_num][col_num] = col.pop()
-                        counter += 1
-            else:
-                for col_num, col in enumerate(nums[::-1]):
-                    if counter >= 5:
-                        break
-                    if len(col) != 0 and last_card.content[row_num][8-col_num] == -1:
-                        last_card.content[row_num][8-col_num] = col.pop()
-                        counter += 1
-        cards_set.append(last_card)
+    if any(nums):
+        exit(1)  # Some error occurred
+   # if any(nums):  # Numbers distribution within a set is not perfect, but this way the generation is much faster
+   #     last_card: Card = cards_set.pop()
+   #     for row_num, row in enumerate(last_card.content):
+   #         for col_num, ele in enumerate(row):
+   #             if ele != -1:
+   #                 nums[col_num].append(ele)
+   #     for _ in range(3):
+   #         for i in range(9):
+   #             nums[i].append(random.randint(10*i, 10*i+9))
+   #     for row_num in range(3):
+   #         counter: int = 9-last_card.content[row_num].count(-1)
+   #         # print(counter)
+   #         if row_num%2 == 0:
+   #             for col_num, col in enumerate(nums):
+   #                 if counter >= 5:
+   #                     break
+   #                 if len(col) != 0 and last_card.content[row_num][col_num] == -1:
+   #                     last_card.content[row_num][col_num] = col.pop()
+   #                     counter += 1
+   #         else:
+   #             for col_num, col in enumerate(nums[::-1]):
+   #                 if counter >= 5:
+   #                     break
+   #                 if len(col) != 0 and last_card.content[row_num][8-col_num] == -1:
+   #                     last_card.content[row_num][8-col_num] = col.pop()
+   #                     counter += 1
+   #     cards_set.append(last_card)
     # print(nums)
     return cards_set
 
+def generate_last_cards(card_num: int, set_num: int, nums: List[List[int]]) -> Card:
+    l: List[int] = [-1] * 9
+    card_content: List[List[int]] = [deepcopy(l) for _ in range(3)]
+    for row_num, row in enumerate(card_content):
+        counter: int = 0    
+       # if row_num%2 == 0:
+       #     for col_num, col in enumerate(nums):
+       #         if counter >= 5:
+       #             break
+       #         if len(col) != 0 and row[col_num] == -1:
+       #             row[col_num] = col.pop()
+       #             counter += 1
+       # else:
+       #     for col_num, col in enumerate(nums[::-1]):
+       #         if counter >= 5:
+       #             break
+       #         if len(col) != 0 and row[8-col_num] == -1:
+       #             row[8-col_num] = col.pop()
+       #             counter += 1
+        d: Dict[int, List[int]] = dict()
+        for index, ele_l in enumerate(nums):
+            d[index] = ele_l
+        sorted_key_list: List[int] = sorted(d, key=lambda k: len(d[k]), reverse=True)
+        sorted_d: Dict[int, List[int]] = {k: d[k] for k in sorted_key_list}
+        # print(sorted_d)
+        for k, v in sorted_d.items():
+            if counter >= 5:
+                break
+            if len(v) != 0 and row[k] == -1:
+                    row[k] = v.pop()
+                    counter += 1
+    card: Card = Card(card_content, f"Cartella {set_num} {card_num}")
+    return card
+
+
 def generate_card(card_num: int, set_num: int, nums: List[List[int]]) -> Card:
+    if card_num >= 4:  # If it's the last card of the set
+        # print("generating last cards")
+        return generate_last_cards(card_num, set_num, nums)
     number_placement_matrix: List[List[bool]] = generate_number_placement_matrix(nums)
     l: List[int] = [-1] * 9
     card_content: List[List[int]] = [deepcopy(l) for _ in range(3)]
@@ -102,6 +144,7 @@ def generate_number_placement_matrix(nums: List[List[int]]) -> List[List[bool]]:
         for _ in range(cols-nums_on_a_row):
             matrix[r].append(False)
         random.shuffle(matrix[r])
+    # print(matrix)
     return matrix
 
 
