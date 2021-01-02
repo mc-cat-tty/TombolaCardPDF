@@ -39,7 +39,7 @@ python3 generator.py | python3 pdf_formatter.py -b "place your bottom text here"
 
 This command will generate 5 card sets:
 ```
-python3 generator.py -n 5 | python3 pdf_formatter.py -b "place your bottom text here" -l logo.png
+python3 generator.py -n 5 | python3 pdf_formatter.py -b "place your bottom text here" -l logo.jpeg
 ```
 
 All the sets will be merged into a single pdf file
