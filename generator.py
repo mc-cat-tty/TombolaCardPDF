@@ -36,7 +36,7 @@ def generate_set(set_num: int) -> CardsSet:
     for i in range(6):
         card: Card = generate_card(i+1, set_num, nums)
         cards_set.append(card)
-    if any(nums):
+    if any(nums):  # Numbers distribution within a set is not perfect, but this way the generation is much faster
         last_card: Card = cards_set.pop()
         for row_num, row in enumerate(last_card.content):
             for col_num, ele in enumerate(row):
