@@ -1,6 +1,10 @@
 # CartellaTombolaPDF
 Tombola card pdf generator from html format template
 
+## Results
+[Results](Results.png)
+[Card](CardResults.png]
+
 ## Setting up
 ```
 pip3 install jinja2
