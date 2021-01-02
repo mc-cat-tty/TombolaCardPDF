@@ -12,7 +12,6 @@ import random
 from card import Card, CardsSet
 from typing import List, Tuple
 from copy import deepcopy
-from collections import defaultdict
 
 SET_NUMBER: int = 1
 
@@ -96,17 +95,7 @@ def generate_last_cards(card_num: int, set_num: int, nums: List[List[int]]) -> C
         sorted_key_list: List[int] = sorted(d, key=lambda k: len(d[k]), reverse=True)
         sorted_d: Dict[int, List[int]] = {k: d[k] for k in sorted_key_list}
         # print(sorted_d)
-        print(sorted_d)
-        shuffled_sorted_d = defaultdict(list)
         for k, v in sorted_d.items():
-            shuffled_sorted_d[len(v)].append((k, v))
-        tmp_l: List[Tuple[int, List[int]]] = list()
-        for v in shuffled_sorted_d.values():
-            random.shuffle(v)
-            for ele in v:
-                tmp_l.append(ele)
-        shuffled_sorted_d = dict(tmp_l)
-        for k, v in shuffled_sorted_d.items():
             if counter >= 5:
                 break
             if len(v) != 0 and row[k] == -1:
@@ -123,10 +112,19 @@ def generate_card(card_num: int, set_num: int, nums: List[List[int]]) -> Card:
     number_placement_matrix: List[List[bool]] = generate_number_placement_matrix(nums)
     l: List[int] = [-1] * 9
     card_content: List[List[int]] = [deepcopy(l) for _ in range(3)]
+    to_do: List[int] = list()
     for row_num, row in enumerate(number_placement_matrix):  # Is this pythonic? I think no
         for col_num, ele in enumerate(row):
             if ele:
+                try:
+                    card_content[row_num][col_num] = nums[col_num].pop()
+                except IndexError:
+                    to_do.append(row_num)
+    for row_num in to_do:
+        for col_num, col in enumerate(nums):
+            if len(col) != 0 and card_content[row_num][col_num] == -1:
                 card_content[row_num][col_num] = nums[col_num].pop()
+                break
     card: Card = Card(card_content, f"Cartella {set_num} {card_num}")
     return card
 
