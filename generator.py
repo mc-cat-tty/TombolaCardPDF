@@ -10,7 +10,8 @@ Row: 9 fields ==> 5 numbers, 4 spaces
 import argparse
 import random
 from card import Card, CardsSet
-from typing import List
+from typing import List, Tuple
+from copy import deepcopy
 
 SET_NUMBER: int = 1
 
@@ -23,30 +24,40 @@ def print_sets(sets: List[CardsSet]) -> None:
 def generate_set(set_num: int) -> CardsSet:
     cards_set: CardsSet = CardsSet()
     nums: List[List[int]] = list()
-    for t in range(0, 10):  # Tens
+    for t in range(0, 9):  # Tens
         nums.append(list())
         for u in range(0, 10):  # Units
-            if not t and not u:  # Skip 0
-                continue
-            nums[t].append(t*10 + u)
+           # if not t and not u:  # Skip 0
+           #     continue
+            nums[t].append(t*10 + u + 1)
         random.shuffle(nums[t])
+    # print(nums)
     for i in range(6):
-         cards_set.append(generate_card(i+1, set_num, nums))
+        card: Card = generate_card(i+1, set_num, nums)
+        while card is None:
+            card = generate_card(i+1, set_num, nums)
+        cards_set.append(card)
     return cards_set
 
 def generate_card(card_num: int, set_num: int, nums: List[List[int]]) -> Card:
     number_placement_matrix: List[List[bool]] = generate_number_placement_matrix(nums)
-    card_content: List[List[int]] = [[-1] * 9] * 3
+    l: List[int] = [-1] * 9
+    card_content: List[List[int]] = [deepcopy(l) for _ in range(3)]
+    to_do: List[int] = list()
     for row_num, row in enumerate(number_placement_matrix):  # Is this pythonic? I think no
         for col_num, ele in enumerate(row):
             if ele:
                 try:
                     card_content[row_num][col_num] = nums[col_num].pop()
                 except IndexError:
-                    for num_col_ele, num_ele in enumerate(nums[col_num]):
-                        if len(num_ele) != 0:
-                            card_content[row_num][col_num] = nums[num_col_ele].pop()
-
+                    to_do.append(row_num)
+    for row_num in to_do:
+        for col_num, col in enumerate(nums):
+            if len(col) != 0 and card_content[row_num][col_num] == -1:
+                card_content[row_num][col_num] = nums[col_num].pop()
+                break
+    if not any(nums):  # If not empty
+        return None
     card: Card = Card(card_content, f"Cartella {card_num}")
     return card
 

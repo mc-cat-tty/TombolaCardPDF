@@ -19,7 +19,7 @@ Input must be formatted in the following way: [cards_set.txt sample](cards_set.t
 Formatting rules:
 - there must be two lines for each card:
 	- the first one is the name of that card inside the set
-	- the second one is a Python list containing one list of integers for each column (of that card)
-- everything after the last pair of lines will be discarded
+	- the second one is a Python list containing one list of integers for each row (of that card)
+- everything after the last pair of lines will be discarded (odd line)
 
 
