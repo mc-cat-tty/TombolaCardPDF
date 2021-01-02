@@ -3,7 +3,7 @@ Tombola card pdf generator from html format template
 
 ## Results
 [Results](Results.png)
-[Card](CardResults.png]
+[Card](CardResults.png)
 
 ## Setting up
 ```
