@@ -34,9 +34,35 @@ def generate_set(set_num: int) -> CardsSet:
     # print(nums)
     for i in range(6):
         card: Card = generate_card(i+1, set_num, nums)
-        while card is None:
-            card = generate_card(i+1, set_num, nums)
         cards_set.append(card)
+    if any(nums):
+        last_card: Card = cards_set.pop()
+        for row_num, row in enumerate(last_card.content):
+            for col_num, ele in enumerate(row):
+                if ele != -1:
+                    nums[col_num].append(ele)
+        for _ in range(3):
+            for i in range(9):
+                nums[i].append(random.randint(10*i+1, 10*i+10))
+        for row_num in range(3):
+            counter: int = 9-last_card.content[row_num].count(-1)
+            # print(counter)
+            if row_num%2 == 0:
+                for col_num, col in enumerate(nums):
+                    if counter >= 5:
+                        break
+                    if len(col) != 0 and last_card.content[row_num][col_num] == -1:
+                        last_card.content[row_num][col_num] = col.pop()
+                        counter += 1
+            else:
+                for col_num, col in enumerate(nums[::-1]):
+                    if counter >= 5:
+                        break
+                    if len(col) != 0 and last_card.content[row_num][8-col_num] == -1:
+                        last_card.content[row_num][8-col_num] = col.pop()
+                        counter += 1
+        cards_set.append(last_card)
+    # print(nums)
     return cards_set
 
 def generate_card(card_num: int, set_num: int, nums: List[List[int]]) -> Card:
@@ -56,8 +82,6 @@ def generate_card(card_num: int, set_num: int, nums: List[List[int]]) -> Card:
             if len(col) != 0 and card_content[row_num][col_num] == -1:
                 card_content[row_num][col_num] = nums[col_num].pop()
                 break
-    if not any(nums):  # If not empty
-        return None
     card: Card = Card(card_content, f"Cartella {card_num}")
     return card
 
@@ -83,7 +107,10 @@ def generate_number_placement_matrix(nums: List[List[int]]) -> List[List[bool]]:
 def main(set_number: int) -> None:
     sets: List[CardsSet] = list()
     for i in range(set_number):
-        sets.append(generate_set(i+1))
+        card_set = generate_set(i+1)
+        # while card_set is None:
+        #    card_set = generate_set(i+1)
+        sets.append(card_set)
     print_sets(sets)
     
 
@@ -92,3 +119,4 @@ if __name__ == "__main__":
    parser.add_argument("-n", "--number", help="Number of sets to generate", default=SET_NUMBER, type=int, dest="set_number")
    args = parser.parse_args()
    main(args.set_number)
+
