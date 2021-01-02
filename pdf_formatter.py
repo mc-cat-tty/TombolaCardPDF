@@ -41,7 +41,7 @@ def import_data_from(source: List[str]) -> CardsSet:
     return cards_set
 
 
-def main() -> None:
+def main(logo_filename: str, bottom_text: str) -> None:
     buf: List[str] = list()
     for line in sys.stdin:
         buf.append(line.strip())
@@ -52,7 +52,7 @@ def main() -> None:
     template_env = Environment(loader=template_loader)
     template = template_env.get_template(HTML_TEMPLATE_FILENAME)
     with open(HTML_FILENAME, "w") as f:
-        text = template.render(cards_set=cards_set, logo_filename=LOGO_FILENAME, bottom_text=BOTTOM_TEXT, enumerate=enumerate)
+        text = template.render(cards_set=cards_set, logo_filename=logo_filename, bottom_text=bottom_text, enumerate=enumerate)
         f.write(text)
     
     # pdfkit configuration
