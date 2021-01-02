@@ -52,5 +52,6 @@ Formatting rules:
 	- the first one is the name of that card inside the set
 	- the second one is a Python list containing one list of integers for each row (of that card)
 - everything after the last pair of lines will be discarded (odd line)
+- blank fileds placeholder is -1
 
 
