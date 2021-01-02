@@ -34,7 +34,9 @@ python3 generator.py | python3 pdf_formatter.py -b "place your bottom text here"
 
 -l  Logo filename
 
--t  Template filename
+-t  Template (HTML) filename
+
+-o  Output PDF filename
 
 ## Genrate multiple card sets
 ![Results](Results.png)
