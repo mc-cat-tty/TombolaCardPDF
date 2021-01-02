@@ -1,4 +1,4 @@
-# CartellaTombolaPDF
+# TombolaCardPDF
 Tombola card pdf generator from html format template
 
 ## Results
