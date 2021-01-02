@@ -28,9 +28,9 @@ def generate_set(set_num: int) -> CardsSet:
     for t in range(0, 9):  # Tens
         nums.append(list())
         for u in range(0, 10):  # Units
-           # if not t and not u:  # Skip 0
-           #     continue
-            nums[t].append(t*10 + u + 1)
+            if not t and not u:  # Skip 0
+                continue
+            nums[t].append(t*10 + u)
         random.shuffle(nums[t])
     # print(nums)
     for i in range(6):
@@ -44,7 +44,7 @@ def generate_set(set_num: int) -> CardsSet:
                     nums[col_num].append(ele)
         for _ in range(3):
             for i in range(9):
-                nums[i].append(random.randint(10*i+1, 10*i+10))
+                nums[i].append(random.randint(10*i, 10*i+9))
         for row_num in range(3):
             counter: int = 9-last_card.content[row_num].count(-1)
             # print(counter)
