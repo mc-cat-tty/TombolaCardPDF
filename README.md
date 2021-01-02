@@ -31,6 +31,7 @@ python3 generator.py | python3 pdf_formatter.py -b "place your bottom text here"
 
 ### _pdf_formatter.py_ Arguments
 -b  Bottom text
+
 -l  Logo filename
 
 ## Genrate multiple card sets
