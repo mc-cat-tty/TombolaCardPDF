@@ -74,7 +74,7 @@ def generate_set(set_num: int) -> CardsSet:
 def generate_last_cards(card_num: int, set_num: int, nums: List[List[int]]) -> Card:
     l: List[int] = [-1] * 9
     card_content: List[List[int]] = [deepcopy(l) for _ in range(3)]
-    for row_num, row in enumerate(card_content):
+    for row in card_content:
         counter: int = 0    
        # if row_num%2 == 0:
        #     for col_num, col in enumerate(nums):
@@ -116,7 +116,7 @@ def generate_last_cards(card_num: int, set_num: int, nums: List[List[int]]) -> C
 
 
 def generate_card(card_num: int, set_num: int, nums: List[List[int]]) -> Card:
-    if card_num >= 3:  # If it's the last card of the set
+    if card_num >= 3:  # If it's ont of the last cards (last four cards) of the set
         # print("generating last cards")
         return generate_last_cards(card_num, set_num, nums)
     number_placement_matrix: List[List[bool]] = generate_number_placement_matrix(nums)
