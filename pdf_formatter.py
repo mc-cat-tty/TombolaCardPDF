@@ -44,6 +44,7 @@ def import_data_from(source: List[str]) -> CardsSet:
 
 def main(logo_filename: str, bottom_text: str) -> None:
     merger = PdfFileMerger()
+    counter: int = 0
     while True:
         buf: List[str] = list()
         for line in sys.stdin:
@@ -73,6 +74,8 @@ def main(logo_filename: str, bottom_text: str) -> None:
             merger.append(PdfFileReader(f))
         #with open(PDF_FILENAME, "wb") as f:
         #    f.write(pdf_buf)
+        counter += 1
+        print(f"\t\tPrinted set {counter}")
     merger.write(PDF_FILENAME)
 
 if __name__ == "__main__":
