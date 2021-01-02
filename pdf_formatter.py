@@ -42,7 +42,7 @@ def import_data_from(source: List[str]) -> CardsSet:
     return cards_set
 
 
-def main(logo_filename: str, bottom_text: str, template_filename: str) -> None:
+def main(logo_filename: str, bottom_text: str, template_filename: str, pdf_filename: str) -> None:
     merger = PdfFileMerger()
     counter: int = 0
     while True:
@@ -69,19 +69,20 @@ def main(logo_filename: str, bottom_text: str, template_filename: str) -> None:
                 "page-size": "A4",
                 "enable-local-file-access": None
         }
-        pdfkit.from_file(HTML_FILENAME, PDF_FILENAME, options=options)
-        with open(PDF_FILENAME, 'rb') as f:
+        pdfkit.from_file(HTML_FILENAME, pdf_filename, options=options)
+        with open(pdf_filename, 'rb') as f:
             merger.append(PdfFileReader(f))
         #with open(PDF_FILENAME, "wb") as f:
         #    f.write(pdf_buf)
         counter += 1
         print(f"\t\tPrinted set {counter}")
-    merger.write(PDF_FILENAME)
+    merger.write(pdf_filename)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-l", "--logo", help="Logo filename", default=LOGO_FILENAME, type=str, dest="logo_filename")
     parser.add_argument("-b", "--bottomtext", help="Bottom text", default=BOTTOM_TEXT, type=str, dest="bottom_text")
     parser.add_argument("-t", "--template", help="HTML template filename", default=HTML_TEMPLATE_FILENAME, type=str, dest="template_filename")
+    parser.add_argument("-o", "--output", help="PDF output filename", default=PDF_FILENAME, type=str, dest="pdf_filename")
     args = parser.parse_args()
-    main(args.logo_filename, args.bottom_text, args.template_filename)
+    main(args.logo_filename, args.bottom_text, args.template_filename, args.pdf_filename)
