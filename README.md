@@ -44,6 +44,12 @@ python3 generator.py -n 5 | python3 pdf_formatter.py -b "place your bottom text 
 
 All the sets will be merged into a single pdf file
 
+## Bottom text on multiple lines
+```
+python3 pdf_formatter.py -b "First line <br> second line <br> third line"
+```
+Divide multiple lines with "<br>" HTML tag
+
 ## _cards_set.txt_ sample
 Input must be formatted in the following way: [cards_set.txt sample](cards_set.txt)
 
@@ -53,5 +59,4 @@ Formatting rules:
 	- the second one is a Python list containing one list of integers for each row (of that card)
 - everything after the last pair of lines will be discarded (odd line)
 - blank fileds placeholder is -1
-
 
