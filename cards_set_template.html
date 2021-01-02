@@ -49,11 +49,11 @@
 <body>
 	{% for i, card in enumerate(cards_set) %}
 	{% if i == 4 %}
-		<div class="col-7 border border-dark mb-5 mt-1" style="page-break-inside: avoid; transform: rotate(90deg);position: absolute;top: 15%;right: -10%;">
+		<div class="col-7 border border-dark mb-5 mt-1" style="page-break-inside: avoid; transform: rotate(90deg);position: absolute;top: 150px;right: -10%;">
 	{% elif i == 5 %}
-		<div class="col-7 border border-dark mb-5 mt-1" style="page-break-inside: avoid; transform: rotate(90deg);position: absolute;top: 70%;right: -10%;">
+		<div class="col-7 border border-dark mb-5 mt-1" style="page-break-inside: avoid; transform: rotate(90deg);position: absolute;top: 800px;right: -10%;">
 	{% else %}
-		<div class="col-7 border border-dark mb-5 mt-1" style="page-break-inside: avoid;">
+		<div class="col-7 border border-dark mb-3 mt-1" style="page-break-inside: avoid;">
 	{% endif %}
 		<ul class="d-flex justify-content-between list-group-horizontal mb-1">
 			<li class="list-group-item border-0 pb-1"><img class="rounded" src="{{ logo_filename }}" width="50px"/></li>
