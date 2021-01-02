@@ -22,7 +22,7 @@ OR
 Pipe generator output directly into pdf_formatter
 
 ```
-python3 generator.py | python3 pdf_formatter.py
+python3 generator.py | python3 pdf_formatter.py -b "place your bottom text here"
 ```
 
 ### Arguments
