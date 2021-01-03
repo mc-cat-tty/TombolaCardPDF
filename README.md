@@ -26,7 +26,7 @@ Pipe generator output directly into pdf_formatter
 python3 generator.py | python3 pdf_formatter.py -b "place your bottom text here"
 ```
 
-## _generator.py_ arguments
+### _generator.py_ arguments
 -n  Number of card sets. Default value is 1
 
 ### _pdf_formatter.py_ Arguments
@@ -38,7 +38,7 @@ python3 generator.py | python3 pdf_formatter.py -b "place your bottom text here"
 
 -o  Output PDF filename
 
-## Genrate multiple card sets
+### Genrate multiple card sets
 ![Results](Results.png)
 
 This command will generate 5 card sets:
@@ -48,7 +48,7 @@ python3 generator.py -n 5 | python3 pdf_formatter.py -b "place your bottom text 
 
 All the sets will be merged into a single pdf file
 
-## Bottom text on multiple lines
+### Bottom text on multiple lines
 ```
 python3 pdf_formatter.py -b "First line <br> second line <br> third line"
 ```
