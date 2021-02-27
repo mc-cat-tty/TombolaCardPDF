@@ -15,6 +15,7 @@ from copy import deepcopy
 from collections import defaultdict
 
 SET_NUMBER: int = 1
+START_NUMBER: int = 1
 
 def print_sets(sets: List[CardsSet]) -> None:
     for cards_set in sets:
@@ -149,10 +150,10 @@ def generate_number_placement_matrix(nums: List[List[int]]) -> List[List[bool]]:
     return matrix
 
 
-def main(set_number: int) -> None:
+def main(set_number: int, start_number: int) -> None:
     sets: List[CardsSet] = list()
-    for i in range(set_number):
-        card_set = generate_set(i+1)
+    for i in range(start_number, set_number+start_number):
+        card_set = generate_set(i)
         # while card_set is None:
         #    card_set = generate_set(i+1)
         sets.append(card_set)
@@ -162,7 +163,8 @@ def main(set_number: int) -> None:
 if __name__ == "__main__":
    parser = argparse.ArgumentParser()
    parser.add_argument("-n", "--number", help="Number of sets to generate", default=SET_NUMBER, type=int, dest="set_number")
+   parser.add_argument("-s", "--start-number", help="First set number", default=START_NUMBER, type=int, dest="start_number")
    args = parser.parse_args()
-   main(args.set_number)
+   main(args.set_number, args.start_number)
 
 
