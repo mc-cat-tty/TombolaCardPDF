@@ -13,6 +13,12 @@ pip3 install PyPDF2
 sudo apt install wkhtmltopdf
 ```
 
+or
+
+```
+pip3 install -r requirements.txt
+```
+
 ## Run the script
 ```
 cat cards_set.txt > python3 pdf_formatter.py
